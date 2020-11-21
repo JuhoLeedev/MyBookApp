@@ -17,6 +17,7 @@
 package com.example.mybookapp;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,6 +28,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,7 +66,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class WritePost extends AppCompatActivity {
+public class WritePost extends AppCompatActivity implements View.OnClickListener  {
     private static final String CLOUD_VISION_API_KEY = BuildConfig.API_KEY;
     public static final String FILE_NAME = "temp.jpg";
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
@@ -79,25 +82,27 @@ public class WritePost extends AppCompatActivity {
 
     private TextView mImageDetails;
     private ImageView mMainImage;
+    private Context mContext;
     private FloatingActionButton fab, fab1, fab2;
+    private Animation fab_open, fab_close;
+    private Boolean isFabOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_post);
 
+        mContext = getApplicationContext();
+        fab_open = AnimationUtils.loadAnimation(mContext, R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(mContext, R.anim.fab_close);
 
-        fab = findViewById(R.id.fab);
-        fab1 = findViewById(R.id.fab1);
-        fab2 = findViewById(R.id.fab2);
+        fab = findViewById(R.id.post_fab);
+        fab1 = findViewById(R.id.post_fab1);
+        fab2 = findViewById(R.id.post_fab2);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fab1.setOnClickListener(this);
-                fab2.setOnClickListener(this);
-            }
-        });
+        fab.setOnClickListener(this);
+        fab1.setOnClickListener(this);
+        fab2.setOnClickListener(this);
 
 
         /*FloatingActionButton fab = findViewById(R.id.fab);
@@ -113,6 +118,40 @@ public class WritePost extends AppCompatActivity {
 
         mImageDetails = findViewById(R.id.image_details);
         mMainImage = findViewById(R.id.main_image);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.post_fab:
+                anim();
+                break;
+            case R.id.post_fab1:
+                anim();
+                startCamera();
+                break;
+            case R.id.post_fab2:
+                anim();
+                startGalleryChooser();
+                break;
+        }
+    }
+
+    public void anim(){
+        if (isFabOpen) {
+            fab1.startAnimation(fab_close);
+            fab2.startAnimation(fab_close);
+            fab1.setClickable(false);
+            fab2.setClickable(false);
+            isFabOpen = false;
+        } else {
+            fab1.startAnimation(fab_open);
+            fab2.startAnimation(fab_open);
+            fab1.setClickable(true);
+            fab2.setClickable(true);
+            isFabOpen = true;
+        }
     }
 
 
@@ -264,6 +303,8 @@ public class WritePost extends AppCompatActivity {
 
         return annotateRequest;
     }
+
+
 
     private class LableDetectionTask extends AsyncTask<Object, Void, String> {
         private final WeakReference<WritePost> mActivityWeakReference;
