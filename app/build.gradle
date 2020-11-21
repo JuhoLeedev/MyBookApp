@@ -23,6 +23,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        buildTypes.each {
+            it.buildConfigField('String', 'API_KEY', "\"AIzaSyC7Ef112y3JCORGa4JD6C-ttkXMgMzu20U\"")
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -53,4 +56,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:17.2.1'
     implementation 'com.google.firebase:firebase-auth:4.2.1'
     implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
+
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:27.1.1'
+    compile 'com.google.api-client:google-api-client-android:1.23.0' exclude module: 'httpclient'
+    compile 'com.google.http-client:google-http-client-gson:1.23.0' exclude module: 'httpclient'
+    compile 'com.google.apis:google-api-services-vision:v1-rev369-1.23.0'
 }

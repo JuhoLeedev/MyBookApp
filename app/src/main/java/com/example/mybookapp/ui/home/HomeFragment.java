@@ -21,8 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybookapp.Book;
 import com.example.mybookapp.R;
-import com.example.mybookapp.WritePost;
+import com.example.mybookapp.MainActivity;
 import com.example.mybookapp.CustomAdapter;
+import com.example.mybookapp.WritePost;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -66,6 +67,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         fab.setOnClickListener(this);
         fab1.setOnClickListener(this);
         fab2.setOnClickListener(this);
+
 
 
         recyclerView = root.findViewById(R.id.recycler);

@@ -3,4 +3,14 @@
     <string name="title_home">홈</string>
     <string name="title_chat">채팅</string>
     <string name="title_myinfo">내 정보</string>
+    <string name="action_settings">세</string>
+    <string name="image_details_header">세부사항:</string>
+    <string name="image_preview_header">프리뷰:</string>
+    <string name="loading_message">이미지 업로드중. 끄지 마시오</string>
+
+    <string name="dialog_select_prompt">사진 선택</string>
+    <string name="dialog_select_camera">카메라</string>
+    <string name="dialog_select_gallery">갤러리</string>
+
+    <string name="image_picker_error">Something is wrong with that image. Pick a different one please.</string>
 </resources>
